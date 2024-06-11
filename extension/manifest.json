@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+    "name": "TUBESUMM",
+    "version": "1.0",
+    "permissions": [
+        "activeTab"
+    ],
+    "background": {
+        "scripts": ["index.js"],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_icon": "icon.png"
+    },
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
