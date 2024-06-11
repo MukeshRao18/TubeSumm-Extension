@@ -1,31 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById("button");
 
-    btn.addEventListener("click", function() {
-        const startInput = document.getElementById("start");
-        const endInput = document.getElementById("end");
-
-        const startTime = startInput.value?startInput.value:0;
-        const endTime = endInput.value;
+    btn.addEventListener("click", async function() {
+        const startInput = document.getElementById("start").value;
+        const endInput = document.getElementById("end").value;
 
         btn.disabled = true;
-        btn.innerHTML = "Summarising...";
+        btn.innerText = "Summarizing...";
 
-        
-        const url = "https://youtu.be/IG0J_ynkemI?si=eoRH5_j0hgVe-b23";
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const url = tab.url;
 
-        fetch(`http://127.0.0.1:5000/summary?url=${encodeURIComponent(url)}&start=${encodeURIComponent(startTime)}&end=${encodeURIComponent(endTime)}`)
-            .then(response => response.json()) 
+        fetch(`http://127.0.0.1:5000/summary?url=${encodeURIComponent(url)}&start=${encodeURIComponent(startInput)}&end=${encodeURIComponent(endInput)}`)
+            .then(response => response.json())
             .then(data => {
-                const output = document.getElementById("output");
-                output.innerText = data.summary;
+                document.getElementById("output").innerText = data.summary;
                 btn.disabled = false;
-                btn.innerHTML = "Summarize";
+                btn.innerText = "Summarize";
             })
             .catch(error => {
                 console.error('Error during summarization:', error);
                 btn.disabled = false;
-                btn.innerHTML = "Summarize";
+                btn.innerText = "Summarize";
             });
     });
 });
