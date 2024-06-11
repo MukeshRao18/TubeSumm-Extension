@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const HF_ACCESS_KEY = "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";
+const HF_ACCESS_KEY = process.env.HF_ACCESS_KEY;
 
 if (!HF_ACCESS_KEY) {
   throw new Error('HF_ACCESS_KEY is not defined in the .env file');
@@ -67,7 +67,6 @@ const getSummary = async (transcript) => {
       inputs: chunk,
       parameters: { max_length: 100 }
     });
-
 
     if (result && result.summary_text) {
       summary += result.summary_text + ' ';
