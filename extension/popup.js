@@ -23,5 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.disabled = false;
                 btn.innerText = "Summarize";
             });
+            
     });
 });
